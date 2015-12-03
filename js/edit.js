@@ -18,7 +18,6 @@ function selectImage(name) {
 	image.setAttribute("data-active", "true");
 }
 document.querySelector('#save_p').onclick = function(){
-	//var ch = cHabitsRef.key;
 	cHabitsRef.once("value", function(snapshot){
 		var ch = snapshot.val();
 		
@@ -96,4 +95,60 @@ document.querySelector('#save_p').onclick = function(){
 	    });		
 	    	location.href='list.html';
 	});		
+}
+window.onload = function()
+{
+
+	cHabitsRef.once("value", function(snapshot){
+		var ch = snapshot.val();
+		var oHabitsRef = oFirebaseRef.child("habits");
+		//the path of current editing habit in firebase database
+		oHabitsRef = oHabitsRef.child(ch.key);
+
+		oHabitsRef.once("value", function(snapshot){
+			 var data = snapshot.val();
+			 document.getElementById("title").value = data.title;
+			 document.getElementById("description").value = data.description;
+			 document.getElementById("title").value = data.title;
+			 if(data.icon == "/img/sleep.jpg")
+			 {
+			 	selectImage("icon1");
+			 }
+			 else if(data.icon == "/img/salad.jpg")
+			 {
+			 	selectImage("icon2");
+			 }
+			 else if(data.icon == "/img/run.jpg")
+			 {
+			 	selectImage("icon3");
+			 }
+			  else if(data.icon == "/img/add.png")
+			 {
+			 	selectImage("icon4");
+			 }
+			 var checkedFreq = "";
+			 var aWeeklyElements = document.getElementsByClassName("weekly-freq");
+			 var aDailyElements = document.getElementsByClassName("daily-freq");
+			 for(var i = 0; i<data.weekly_frequency.length;i++)
+			 {
+			 	if(data.weekly_frequency[i]==',')
+			 	{
+					for(var j=0; j < aWeeklyElements.length; j++){
+						if(aWeeklyElements[j].value == checkedFreq){
+							aWeeklyElements[j].checked = true;
+							break;
+						}
+					}
+					checkedFreq = "";
+			 	}
+			 	else
+			 	{
+			 		checkedFreq += data.weekly_frequency[i];
+			 	}
+			 }
+
+
+		});	
+	});	
+
 }

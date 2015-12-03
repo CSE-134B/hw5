@@ -26,7 +26,7 @@
                         <img src="../img/delete.svg" alt="Del">
                         </button>
                     
-                        <button type="button" class="op op-edit" onclick="editHabit(this)" title="edit habit">
+                        <button type="button" class="op op-edit" title="edit habit" onclick="editHabit(this)">
                         <img src="../img/edit.svg" alt="Edit">
                         </button>
                     </li>
@@ -143,13 +143,14 @@ currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSib
                 });
             
         }
-        var data = null;
-        var eFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/habits');
-        var cHabitsRef = oFirebaseRef.child("currentHabit");
-        eFirebaseRef.once("value", function(snapshot){
-             data = snapshot.val();
-        });
- function editHabit(habit){
+var data = null;
+var eFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/habits');
+var cHabitsRef = oFirebaseRef.child("currentHabit");
+eFirebaseRef.once("value", function(snapshot){
+    data = snapshot.val();
+});
+
+function editHabit(habit){
     var habitTitle = habit.previousElementSibling.previousElementSibling.innerHTML;
         for(var keys in data){
             if(data[keys].title == habitTitle)
@@ -161,10 +162,10 @@ currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSib
     cHabitsRef
     .set({
         key: currentKey
-    });
+});
     location.href='edit.html';
 }
-        
+
     </script>
 <script>
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');

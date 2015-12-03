@@ -1,5 +1,5 @@
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
-
+var cHabitsRef = oFirebaseRef.child("currentHabit");
 
 window.onload = function() {
 
@@ -15,6 +15,7 @@ var progressBarAnimate = function(doneButton){
 }
 
 document.querySelector(".op-del").onclick = function(){
+  alert("nimab");
     console.log("entered function op-del");
   	var oHabit = this.parentNode.parentNode;
   	var sHabitId = oHabit.querySelector('input[name=habit-id]').value;
@@ -42,7 +43,6 @@ document.querySelector(".op-del").onclick = function(){
       }
     }
 }
-
 
 
 };
