@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../css/list.css">
     <link rel="stylesheet" href="../sweetalert/dist/sweetalert.css">
+    <script src="../js/Rollbar.js"></script>
     
     <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
     
@@ -79,7 +80,7 @@
                 var counter = data.numCompleted;
               
                 var newCount = counter + 1;
-                    console.log(oFirebaseRef.child(childSnapshot.key()).update({numCompleted : newCount}));
+                    //console.log(oFirebaseRef.child(childSnapshot.key()).update({numCompleted : newCount}));
                     var oCheckedNotificationRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/notifications/' + childSnapshot.key());
                     var oUpdatedDate = Date.now();
                     oCheckedNotificationRef.update({'last_updated': oUpdatedDate});
@@ -87,7 +88,7 @@
                 if (newCount >= countstop) {
                     //message if habit is completed
                    currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSibling.nextElementSibling.innerHTML = "Completed Habit!";
-                    console.log("complete!");
+                    //console.log("complete!");
                     animator(oProgress, 100, 100);
                 }
                 else {
@@ -100,7 +101,7 @@ currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSib
                 });
         }
         var animator = function(oProgress, denom, num){
-            console.log(denom, num);
+            //console.log(denom, num);
             var iMsecsPerUpdate = 1000/60;  // # of milliseconds between updates, this gives 60fps
             var iDuration = 3;              // secs to animate for
             var iInterval = ((denom/num) * oProgress.getAttribute('max'))/(iDuration*1000/iMsecsPerUpdate); //Edit this to change the amount the bar animates for
@@ -210,11 +211,11 @@ window.onload = function()
                     document.getElementsByClassName("totalNum")[i].innerHTML = sDaily_frequencys[i];
                     habitList.appendChild(habitListItem); 
                 
-                    console.log(document.getElementsByClassName("habit-name")[i].innerHTML = sTitles[i]);
-                    console.log(document.getElementsByClassName("habit-icon")[i].src = ".." + sIcons[i]);
-                    console.log(document.getElementsByClassName("habit-desc")[i].innerHTML = sDescriptions[i]);
-                    console.log(document.getElementsByClassName("completed")[i].innerHTML = sNumCompleted[i]);
-                    console.log(document.getElementsByClassName("totalNum")[i].innerHTML = sDaily_frequencys[i]);
+                    // console.log(document.getElementsByClassName("habit-name")[i].innerHTML = sTitles[i]);
+                    // console.log(document.getElementsByClassName("habit-icon")[i].src = ".." + sIcons[i]);
+                    // console.log(document.getElementsByClassName("habit-desc")[i].innerHTML = sDescriptions[i]);
+                    // console.log(document.getElementsByClassName("completed")[i].innerHTML = sNumCompleted[i]);
+                    // console.log(document.getElementsByClassName("totalNum")[i].innerHTML = sDaily_frequencys[i]);
                     
             
                 }

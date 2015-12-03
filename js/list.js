@@ -11,6 +11,7 @@ function authDataCallback(authData){
 
     } else{
         console.log("User is logged out");
+        Rollbar.info("Unauthorized user attempted to access page", {page: "list.html"});
         window.location = "login.html";
     }
 }
@@ -42,6 +43,7 @@ document.querySelector(".op-del").onclick = function(){
   	var onCompleteHabit = function(error) {
   		if (error) {
   			console.log('Synchronization failed');
+        Rollbar.error("Habit did not complete successfully", {habitId: sHabitId, error: error})
   		} else {
   			console.log('Synchronization succeeded');
         oNotificationRef.remove(onCompleteNotification);
@@ -51,6 +53,7 @@ document.querySelector(".op-del").onclick = function(){
     var onCompleteNotification = function(error) {
       if (error) {
         console.log('Synchronization failed');
+        Rollbar.error("Notification did not complete successfully", {habitId: sHabitId, error:error});
       } else {
         console.log('Synchronization succeeded');
         oHabitsList.removeChild(oHabit);

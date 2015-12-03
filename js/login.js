@@ -18,7 +18,7 @@ function authDataCallback(authData){
 function authHandler(error, authData){
 	if(error){
 		console.log("Login Failed!", error);
-		//TODO: show error on screen
+		Rollbar.error("Login failed", {authData: authData, error: error});
 	} else{
 		console.log("Authenticated successfully with payload:", authData);
 		firebasePersistUserAuth(authData);
@@ -48,8 +48,10 @@ function firebaseCreateUser(userEmail, password){
 	}, function(error, userData){
 		if (error){
 			console.log("Error creating user:", error);
+			Rollbar.error("An error occured while creating a user", {userData: userData, error: error});
 		} else{
 			console.log("Successfully created user account with uid:", userData.uid);
+			Rollbar.info("A new user has been created", {userData: userData})
 			//Notify that your username has been created
 			document.querySelector('#signInMessage').style.display;
 

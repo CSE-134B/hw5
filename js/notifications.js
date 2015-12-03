@@ -12,6 +12,7 @@ oNotificationsRef.once("value", function(data) {
 	// do some stuff once
 	data.forEach(function(childSnapshot){
 		var oNotification = childSnapshot.val();
+
 		var sNotificationKey = childSnapshot.key();
 		checkNotification(oNotification, sNotificationKey);
 	});
@@ -21,7 +22,6 @@ var checkNotification = function(oNotification, sNotificationKey){
 	oCurDate = new Date(oCurDate);
 	var iMissedNotifications = 0;
 	var oLastUpdated = new Date(oNotification.last_updated);
-	
 	var aDays = getWeeklyFrequency(oNotification.weekly_frequency);
 
 	var iDateDifference = oCurDate.getDate() - oLastUpdated.getDate();
@@ -62,9 +62,6 @@ var checkNotification = function(oNotification, sNotificationKey){
 			}
 
 		}
-
-
-
 	}
 
 

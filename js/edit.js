@@ -12,6 +12,7 @@ function authDataCallback(authData){
 
     } else{
         console.log("User is logged out");
+        Rollbar.info("Unauthorized user attempted to access page", {page: "edit.html"});
         window.location = "login.html";
     }
 }
