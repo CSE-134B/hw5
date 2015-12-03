@@ -7,7 +7,6 @@ oFirebaseRef.onAuth(authDataCallback);
 function authDataCallback(authData){
     if(authData){
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
-        window.location = "list.html";
 
     } else{
         console.log("User is logged out");
