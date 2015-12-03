@@ -5,6 +5,21 @@ mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");
 
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
 
+oFirebaseRef.onAuth(authDataCallback);
+
+
+//This function is called as soon as the authenticate information is received
+function authDataCallback(authData){
+    if(authData){
+        console.log("User " + authData.uid + " is logged in with " + authData.provider);
+
+    } else{
+        console.log("User is logged out");
+        Rollbar.info("Unauthorized user attempted to access page", {page: "add.html"});
+        window.location = "login.html";
+    }
+}
+
 function selectImage(name) {
 	//Clear all the other effects
 	document.getElementById('icon1').style.border = "none";
