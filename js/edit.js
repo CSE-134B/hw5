@@ -18,6 +18,49 @@ function selectImage(name) {
 	image.setAttribute("data-active", "true");
 }
 document.querySelector('#save_p').onclick = function(){
+	   //checks to ensure form is filled in correctly before submitting
+	//if no title, alert user
+    if(!$('#title').val()) {
+        document.getElementById("noTitle").style.display=""
+        return;
+    }
+            
+    //if a weekly frequency isn't selected, alert user
+    if(!$('input:checkbox').is(':checked')){
+        document.getElementById("noWFreq").style.display=""
+        return;
+    }
+              
+    //if a daily frequency or others frequency isn't selected, alert user
+    if(!$('input:radio').is(':checked')){                 
+         if(!$('#others').val()){
+            document.getElementById("noDFreq").style.display=""
+            return;
+        }
+        //if user enters number less than the minimum, alert user 
+        if($('#others').val() < $('#others').attr('min')){
+            swal("Oops!", "Please enter a valid Daily Frequency", "error");
+            return;
+        }
+    }
+            
+    //if both a daily frequency and others frequency are chosen, go with others frequency
+    if($('input:radio').is(':checked')) {
+        if ($('#others').val() > 3) {
+            $('input:radio').prop("checked",false);  //or .attr
+        }
+        else
+            $('#others').attr('value','0');
+    }
+            
+    //if a habit icon isn't chosen, use default add icon
+    if(document.getElementById('icon1').getAttribute("data-active") == "false"){
+        if(document.getElementById('icon2').getAttribute("data-active") == "false"){
+            if(document.getElementById('icon3').getAttribute("data-active") == "false"){
+                document.getElementById('icon4').setAttribute("data-active", "true");
+            }
+        }       
+    }
 	cHabitsRef.once("value", function(snapshot){
 		var ch = snapshot.val();
 		
@@ -145,6 +188,18 @@ window.onload = function()
 			 	{
 			 		checkedFreq += data.weekly_frequency[i];
 			 	}
+			 }
+			 switch(data.daily_frequency)
+			 {
+			 	case 1:
+			 		aDailyElements[0].checked = true;
+			 		break;
+			 	case 2:
+			 		aDailyElements[1].checked = true;
+			 		break;
+			 	case 3:
+			 		aDailyElements[2].checked = true;
+			 		break;
 			 }
 
 
