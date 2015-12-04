@@ -165,6 +165,7 @@ var animator = function(oProgress, denom, num){
 function deleteHabit(element) {
     aChildren = element.parentNode.parentNode.childNodes;
     for(i=0; i<aChildren.length; i++){
+      console.log("aChildren", aChildren[i]);
       if(aChildren[i].className == "habit-id"){
         var sDeleteHabitId = aChildren[i].getAttribute("data-habitId");
       }
