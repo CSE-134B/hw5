@@ -4,6 +4,7 @@ for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElemen
 mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");
 
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
+var uId = 0;
 
 oFirebaseRef.onAuth(authDataCallback);
 
@@ -12,6 +13,7 @@ oFirebaseRef.onAuth(authDataCallback);
 function authDataCallback(authData){
     if(authData){
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
+        uId = authData.uid;
 
     } else{
         console.log("User is logged out");
@@ -141,7 +143,7 @@ document.querySelector('#save_p').onclick = function(){
 	console.log("Others", sOthers);
 
 
-	var oHabitsRef = oFirebaseRef.child("habits");
+	var oHabitsRef = oFirebaseRef.child("users/" + uId + "/habits");
 
 	oNewHabitRef = oHabitsRef.push();
 	sHabitId = oNewHabitRef.key();
@@ -155,9 +157,10 @@ document.querySelector('#save_p').onclick = function(){
         bestRecord:         sBestRecord,
         daysInARow:         sDaysInARow, 
         numCompleted:  sNumCompletedToday,
+        numMissed: 0
 	});
 
-	var oNotificationsRef = oFirebaseRef.child("notifications");
+	var oNotificationsRef = oFirebaseRef.child("users/" + uId + "/notifications");
 	var date = Date.now();
 	
 	var oNewNotificationRef = oNotificationsRef.child(sHabitId);
@@ -167,6 +170,7 @@ document.querySelector('#save_p').onclick = function(){
     	weekly_frequency: 	sWeeklyFreq,
     	daily_frequency: 	sDailyFreq,
     	last_updated: 		date
+
     });				
 
     mixpanel.track("Habit Added");
@@ -174,3 +178,7 @@ document.querySelector('#save_p').onclick = function(){
 	document.location.href = "list.html";
 }
 
+document.querySelector("#logOut").onclick = function(){
+  oFirebaseRef.unauth();
+  window.location("login.html");
+}

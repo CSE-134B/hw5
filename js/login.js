@@ -24,9 +24,11 @@ function authHandler(error, authData){
 	if(error){
 		console.log("Login Failed!", error);
 		Rollbar.error("Login failed", {authData: authData, error: error});
+		document.querySelector('#firebaseError').innerHTML = error;
 	} else{
-		console.log("Authenticated successfully with payload:", authData);
-		firebasePersistUserAuth(authData);
+		//firebasePersistUserAuth(authData);
+		window.location = "list.html";
+
 	}
 }
 
@@ -41,11 +43,10 @@ function firebaseLogin(userEmail, password){
 }
 
 function firebasePersistUserAuth(authData){
-	oFirebaseRef.child("users").child(authData.uid).set({
-		provider: authData.provider,
-		name: authData.password.email.replace(/@.*/, '')
-	});
-	window.location = "list.html";
+	// oFirebaseRef.child("users").child(authData.uid).set({
+	// 	provider: authData.provider,
+	// 	name: authData.password.email.replace(/@.*/, '')
+	// });
 }
 
 function firebaseCreateUser(userEmail, password){
@@ -56,6 +57,7 @@ function firebaseCreateUser(userEmail, password){
 		if (error){
 			console.log("Error creating user:", error);
 			Rollbar.error("An error occured while creating a user", {userData: userData, error: error});
+			document.querySelector('#firebaseError').innerHTML = error;
 		} else{
 			console.log("Successfully created user account with uid:", userData.uid);
 			Rollbar.info("A new user has been created", {userData: userData})
@@ -79,9 +81,17 @@ document.querySelector('#loginButton').onclick=function(){
 document.querySelector('#signUpButton').onclick=function(){
 	var userEmail = document.querySelector('#usermail').value;
 	var password = document.querySelector('#password').value;
-	firebaseCreateUser(userEmail, password);
-	
+	firebaseCreateUser(userEmail, password);	
 }
+
+document.querySelector('#password').onkeyup = function(e){
+	//enter key has been pressed
+	if(e.keyCode == 13){	
+		var userEmail = document.querySelector('#usermail').value;
+		var password = document.querySelector('#password').value; 
+		firebaseLogin(userEmail, password);	
+	}
+};
 
 // document.querySelector('#signUpButton').onclick=function(){
 // 	var signUpText = document.getElementById("signInMessage");

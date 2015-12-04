@@ -1,23 +1,27 @@
 var currentKey = "";
 var flag = null;
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
+var oHabitsRef;
+var cHabitsRef;
 
 oFirebaseRef.onAuth(authDataCallback);
+var uId = 0;
 
 
 //This function is called as soon as the authenticate information is received
 function authDataCallback(authData){
     if(authData){
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
-
+        uId = authData.uid;
+        cHabitsRef = oFirebaseRef.child("users/" + uId + "/currentHabit");
+        oHabitsRef = oFirebaseRef.child("users/" + uId + "/habits");
+        populateFields();
     } else{
         console.log("User is logged out");
         Rollbar.info("Unauthorized user attempted to access page", {page: "edit.html"});
         window.location = "login.html";
     }
 }
-
-var cHabitsRef = oFirebaseRef.child("currentHabit");
 
 function selectImage(name) {
 	//Clear all the other effects
@@ -124,7 +128,6 @@ document.querySelector('#save_p').onclick = function(){
 		console.log("Daily", sDailyFreq);
 		console.log("Others", sOthers);
 
-		var oHabitsRef = oFirebaseRef.child("habits");
 		//the path of current editing habit in firebase database
 		oHabitsRef = oHabitsRef.child(ch.key);
 		sHabitId = 	oHabitsRef.key();
@@ -141,7 +144,7 @@ document.querySelector('#save_p').onclick = function(){
 	        numCompleted:  sNumCompletedToday,
 		});
 
-		var oNotificationsRef = oFirebaseRef.child("notifications");
+		var oNotificationsRef = oFirebaseRef.child("users/" + uId + "/notifications");
 		var date = Date.now();
 		
 		var oNewNotificationRef = oNotificationsRef.child(sHabitId);
@@ -155,12 +158,9 @@ document.querySelector('#save_p').onclick = function(){
 	    	location.href='list.html';
 	});		
 }
-window.onload = function()
-{
-
+function populateFields(){
 	cHabitsRef.once("value", function(snapshot){
 		var ch = snapshot.val();
-		var oHabitsRef = oFirebaseRef.child("habits");
 		//the path of current editing habit in firebase database
 		oHabitsRef = oHabitsRef.child(ch.key);
 
@@ -221,5 +221,9 @@ window.onload = function()
 
 		});	
 	});	
+}
 
+document.querySelector("#logOut").onclick = function(){
+  oFirebaseRef.unauth();
+  window.location("login.html");
 }
