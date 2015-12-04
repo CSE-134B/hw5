@@ -1,5 +1,6 @@
 # hw5: App Prep and Distribution
 
+=======
 Team Members: 
   - Kann Chea
   - Megan Ring
@@ -13,6 +14,7 @@ Team Members:
 2. Mixpanel - Usage monitoring/analytics, notification/email reminders
 3. PhoneGap - Phone app Proof of Concept
 4. Grunt - Minification
+5. Firebase - Database
 
 ##### Login Credentials
 
