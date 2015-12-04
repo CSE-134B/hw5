@@ -191,10 +191,7 @@ document.querySelector('#save_p').onclick = function(){
 document.querySelector("#logOut").onclick = function(){
   oFirebaseRef.unauth();
   window.location("login.html");
-<<<<<<< HEAD
 }
 
 }//End phoneGap
-=======
-}
->>>>>>> origin/master
+
