@@ -61,5 +61,9 @@ document.querySelector(".op-del").onclick = function(){
     }
 }
 
+document.querySelector("#logOut").onclick = function(){
+  
+}
+
 
 };
