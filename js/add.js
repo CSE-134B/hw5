@@ -175,7 +175,7 @@ document.querySelector('#save_p').onclick = function(){
 
     mixpanel.track("Habit Added");
     
-	window.location = "list.html";
+	document.location.href = "list.html";
 }
 
 document.querySelector("#logOut").onclick = function(){
