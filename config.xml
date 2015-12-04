@@ -9,6 +9,7 @@
       Virture / Vice : Habits Tracker
    </description>
    
+   <content src="index.html" />
    <preference name = "permissions" value = "none"/>
    
 </widget>
