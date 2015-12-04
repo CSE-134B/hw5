@@ -3,12 +3,14 @@ var flag = null;
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
 
 oFirebaseRef.onAuth(authDataCallback);
+var uId = 0;
 
 
 //This function is called as soon as the authenticate information is received
 function authDataCallback(authData){
     if(authData){
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
+        uId = authData.uid;
 
     } else{
         console.log("User is logged out");
@@ -124,7 +126,7 @@ document.querySelector('#save_p').onclick = function(){
 		console.log("Daily", sDailyFreq);
 		console.log("Others", sOthers);
 
-		var oHabitsRef = oFirebaseRef.child("habits");
+		var oHabitsRef = oFirebaseRef.child("users/" + uId +"/habits");
 		//the path of current editing habit in firebase database
 		oHabitsRef = oHabitsRef.child(ch.key);
 		sHabitId = 	oHabitsRef.key();
@@ -141,7 +143,7 @@ document.querySelector('#save_p').onclick = function(){
 	        numCompleted:  sNumCompletedToday,
 		});
 
-		var oNotificationsRef = oFirebaseRef.child("notifications");
+		var oNotificationsRef = oFirebaseRef.child("users/" + uId + "/notifications");
 		var date = Date.now();
 		
 		var oNewNotificationRef = oNotificationsRef.child(sHabitId);
@@ -222,4 +224,9 @@ window.onload = function()
 		});	
 	});	
 
+}
+
+document.querySelector("#logOut").onclick = function(){
+  oFirebaseRef.unauth();
+  window.location("login.html");
 }

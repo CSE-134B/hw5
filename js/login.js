@@ -25,7 +25,6 @@ function authHandler(error, authData){
 		console.log("Login Failed!", error);
 		Rollbar.error("Login failed", {authData: authData, error: error});
 	} else{
-		console.log("Authenticated successfully with payload:", authData);
 		firebasePersistUserAuth(authData);
 	}
 }
@@ -78,9 +77,18 @@ document.querySelector('#loginButton').onclick=function(){
 document.querySelector('#signUpButton').onclick=function(){
 	var userEmail = document.querySelector('#usermail').value;
 	var password = document.querySelector('#password').value;
-	firebaseCreateUser(userEmail, password);
-	
+	firebaseCreateUser(userEmail, password);	
 }
+
+document.querySelector('#password').onkeyup = function(e){
+	//enter key has been pressed
+	console.log(e.keyCode);
+	if(e.keyCode == 13){	
+		var userEmail = document.querySelector('#usermail').value;
+		var password = document.querySelector('#password').value; 
+		firebaseLogin(userEmail, password);	
+	}
+};
 
 // document.querySelector('#signUpButton').onclick=function(){
 // 	var signUpText = document.getElementById("signInMessage");
