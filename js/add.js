@@ -184,3 +184,5 @@ document.querySelector("#logOut").onclick = function(){
   oFirebaseRef.unauth();
   window.location("login.html");
 }
+
+
