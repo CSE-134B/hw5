@@ -25,8 +25,8 @@ mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");</script><!-- end Mixpanel -->
         <ul id="habit-list">
             <template id = "habits">
             <li>
-                <input type="hidden" name="habit-id">
                 <ul class="habit-info">
+                    <input type="hidden" class="habit-id" name="habit-id" data-habitId="">
                     <li><div class="habit-name"></div>
                         <button type="button" class="op op-del" title="delete habit" onclick="deleteHabit(this)">
                         <img src="../img/delete.svg" alt="Del">
@@ -41,7 +41,7 @@ mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");</script><!-- end Mixpanel -->
                 </ul>
                 <div class="message">
                     <span class="message-total">
-                        <strong ><p class="habit-days-in-a-row"></p></strong> days in a row! Best Record: <strong ><p class="habit-best-record"></p></strong><br>
+                        <strong ><span class="habit-days-in-a-row"></span></strong> days in a row! Best Record: <strong ><span class="habit-best-record"></span></strong><br>
                        <progress class="habit-progress" max="100" value="0"></progress>
                     </span><br>
                     <span visibility="hidden">Completed <strong id="habitCounter" class = "completed"></strong>/<strong id="habitStop" class = "totalNum"></strong> for today!</span>

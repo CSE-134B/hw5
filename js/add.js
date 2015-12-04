@@ -159,6 +159,7 @@ document.querySelector('#save_p').onclick = function(){
         bestRecord:         sBestRecord,
         daysInARow:         sDaysInARow, 
         numCompleted:  sNumCompletedToday,
+        numMissed: 0
 	});
 
 	var oNotificationsRef = oFirebaseRef.child("users/" + uId + "/notifications");
@@ -171,6 +172,7 @@ document.querySelector('#save_p').onclick = function(){
     	weekly_frequency: 	sWeeklyFreq,
     	daily_frequency: 	sDailyFreq,
     	last_updated: 		date
+
     });				
 
     mixpanel.track("Habit Added");

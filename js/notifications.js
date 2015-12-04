@@ -2,7 +2,7 @@ if(oFirebaseRef == null){
 	var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
 }
 
-var oNotificationsRef = oFirebaseRef.child("notifications");
+var oNotificationsRef = oFirebaseRef.child("users/" + uId + "/notifications");
 
 //Get all notifications, check which ones have not been displayed, and display them and update the timestamp
 
@@ -25,7 +25,6 @@ var checkNotification = function(oNotification, sNotificationKey){
 	var aDays = getWeeklyFrequency(oNotification.weekly_frequency);
 
 	var iDateDifference = oCurDate.getDate() - oLastUpdated.getDate();
-	var iWeeks = 0;
 
 	if(iDateDifference > 1){		//Not on same date
 		if(iDateDifference > 7){
@@ -67,14 +66,21 @@ var checkNotification = function(oNotification, sNotificationKey){
 
 	if(iMissedNotifications > 0){
 		//TODO: GET HABIT HERE
-		var oHabitRef = oFirebaseRef.child("habits/" + sNotificationKey);
+		var oHabitRef = oFirebaseRef.child("users/" + uId + "habits/" + sNotificationKey);
 			oHabitRef.once("value", function(data){
 				var oHabit = data.val();
 				showUserNotifications(iMissedNotifications, oHabit.title);
-				var oCheckedNotificationRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/notifications/' + sNotificationKey);
+				var oCheckedNotificationRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/users/' + uId + 'notifications/' + sNotificationKey);
 				var oUpdatedDate = Date.now();
-
+				var bestRecord = 0;
+				if(oHabit.daysInARow > oHabit.bestRecord){
+					bestRecord = oHabit.daysInARow;
+				} else{
+					bestRecord = oHabit.bestRecord;
+				}
+				var numMissed = oHabit.numMissed + iMissedNotifications;
 				oCheckedNotificationRef.update({'last_updated': oUpdatedDate});
+				oHabitRef.update({'bestRecord': bestRecord, 'numMissed': numMissed})
 			});
 			
 		}

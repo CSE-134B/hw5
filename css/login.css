@@ -18,6 +18,11 @@ body {
   overflow: hidden;
 }
 
+#firebaseError {
+  text-align: center;
+  color:red;
+}
+
 .login {
 	position: relative;
 	margin: 0 auto;
@@ -31,6 +36,8 @@ body {
   -ms-transform: translateY(-75%);
   transform: translate(-50%, -75%); */
 }
+
+
 
 @media (max-width: 450px) {
   .login {

@@ -3,8 +3,6 @@ var cHabitsRef;
 var oHabitsRef;
 
 oFirebaseRef.onAuth(authDataCallback);
-var uId = 0;
-
 
 //This function is called as soon as the authenticate information is received
 function authDataCallback(authData){
@@ -38,7 +36,7 @@ window.onload = function() {
 
     document.querySelector("#noHabits").style.display = 'none';
     
-    snapshot.forEach(function(childSnapshot){
+    snapshot.forEach(function(childSnapshot, key){
         
     var data = childSnapshot.val();
     sBestRecords[index] = data.bestRecord;
@@ -49,6 +47,7 @@ window.onload = function() {
     sTitles[index] = data.title;
     sWeekly_frequencys[index] = data.weekly_frequency;
     sNumCompleted[index] = data.numCompleted;
+    sHabitId = childSnapshot.key();
     
     index++;
         
@@ -62,6 +61,9 @@ window.onload = function() {
       document.getElementsByClassName("habit-desc")[i].innerHTML = sDescriptions[i];
       document.getElementsByClassName("completed")[i].innerHTML = sNumCompleted[i];
       document.getElementsByClassName("totalNum")[i].innerHTML = sDaily_frequencys[i];
+      document.getElementsByClassName("habit-days-in-a-row")[i].innerHTML = sDaysInARows[i];
+      document.getElementsByClassName("habit-best-record")[i].innerHTML = sBestRecords[i];
+      document.getElementsByClassName("habit-id")[i].setAttribute("data-habitId", sHabitId);
       habitList.appendChild(habitListItem); 
   
       // console.log(document.getElementsByClassName("habit-name")[i].innerHTML = sTitles[i]);
@@ -73,37 +75,38 @@ window.onload = function() {
 
   }
   if(index > 0){
-    document.querySelector(".op-del").onclick = function(){
-    alert("nimab");
-      console.log("entered function op-del");
-      var oHabit = this.parentNode.parentNode;
-      var sHabitId = oHabit.querySelector('input[name=habit-id]').value;
-      var oHabitsList = oHabit.parentNode;
-      var oHabitRef = oFirebaseRef.child("users/" + uId + "/habits" + sHabitId);
-      var oNotificationRef = oFirebaseRef.child("users/" + uId + "/notifications" + sHabitId);
+    // document.querySelector(".op-del").onclick = function(){
+    //   console.log("entered function op-del");
+    //   var oHabit = this.parentNode.parentNode;
+    //   console.log(oHabit);
+    //   var sHabitId = oHabit.querySelector('input[name=habit-id]').value;
+    //   console.log(sHabitId);
+    //   var oHabitsList = oHabit.parentNode;
+    //   var oHabitRef = oFirebaseRef.child("users/" + uId + "/habits" + sHabitId);
+    //   var oNotificationRef = oFirebaseRef.child("users/" + uId + "/notifications" + sHabitId);
 
-      oHabitRef.remove(onCompleteHabit);
+    //   oHabitRef.remove(onCompleteHabit);
 
-      var onCompleteHabit = function(error) {
-        if (error) {
-          console.log('Synchronization failed');
-          Rollbar.error("Habit did not complete successfully", {habitId: sHabitId, error: error})
-        } else {
-          console.log('Synchronization succeeded');
-          oNotificationRef.remove(onCompleteNotification);
-        }
-      }
+    //   var onCompleteHabit = function(error) {
+    //     if (error) {
+    //       console.log('Synchronization failed');
+    //       Rollbar.error("Habit did not complete successfully", {habitId: sHabitId, error: error})
+    //     } else {
+    //       console.log('Synchronization succeeded');
+    //       oNotificationRef.remove(onCompleteNotification);
+    //     }
+    //   }
 
-      var onCompleteNotification = function(error) {
-        if (error) {
-          console.log('Synchronization failed');
-          Rollbar.error("Notification did not complete successfully", {habitId: sHabitId, error:error});
-        } else {
-          console.log('Synchronization succeeded');
-          oHabitsList.removeChild(oHabit);
-        }
-      }
-    }
+    //   var onCompleteNotification = function(error) {
+    //     if (error) {
+    //       console.log('Synchronization failed');
+    //       Rollbar.error("Notification did not complete successfully", {habitId: sHabitId, error:error});
+    //     } else {
+    //       console.log('Synchronization succeeded');
+    //       oHabitsList.removeChild(oHabit);
+    //     }
+    //   }
+    // }
 
   } else{
     document.querySelector("#noHabits").style.display = 'block';
@@ -193,7 +196,13 @@ var animator = function(oProgress, denom, num){
 
 //delete habit alert and transition
 function deleteHabit(element) {
-    
+    aChildren = element.parentNode.parentNode.childNodes;
+    for(i=0; i<aChildren.length; i++){
+      if(aChildren[i].className == "habit-id"){
+        var sDeleteHabitId = aChildren[i].getAttribute("data-habitId");
+      }
+
+    }
     swal({ title: "Delete Habit?", text: "Are you sure you want to delete this habit?", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!", closeOnConfirm: false }, 
          
          function(){ 
@@ -203,18 +212,13 @@ function deleteHabit(element) {
             $(child).one('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(event) {
                 $(this).remove();
             });
-        
+            console.log(uId);
             var habitTitle = element.previousElementSibling.innerHTML;
-            var oHabitsRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/users/' + uId + '/habits');
-            var oNotificationRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/users/' + uId + '/notifications');
-            
-            oHabitsRef.orderByChild("title").equalTo(habitTitle).once("value", function(snapshot){
-                snapshot.forEach(function(childSnapshot){
-                    sHabitKey = childSnapshot.key();
-                    oHabitsRef.child(childSnapshot.key()).remove();
-                    oNotificationRef.child(sHabitKey).remove();
-                });
-            });
+            var oHabitsRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/users/' + uId + '/habits/' + sDeleteHabitId);
+            var oNotificationRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/users/' + uId + '/notifications/' + sDeleteHabitId);
+           
+           oHabitsRef.remove();
+           oNotificationRef.remove(); 
             swal({   title: "Deleted!",   text: "Habit successfully deleted.",   timer: 800,   showConfirmButton: false });
         
             mixpanel.track("Deleted a Habit");
