@@ -7,14 +7,12 @@ oFirebaseRef.onAuth(authDataCallback);
 //This function is called as soon as the authenticate information is received
 function authDataCallback(authData){
     if(authData){
-        //console.log("User " + authData.uid + " is logged in with " + authData.provider);
       uId = authData.uid;
       cHabitsRef = oFirebaseRef.child("users/" + uId + "/currentHabit");
       oHabitsRef = oFirebaseRef.child('/users/' + uId + '/habits');
 
 
     } else{
-        //console.log("User is logged out");
         Rollbar.info("Unauthorized user attempted to access page", {page: "list.html"});
         window.location = "login.html";
     }
@@ -67,13 +65,6 @@ window.onload = function() {
       document.getElementsByClassName("habit-id")[i].setAttribute("data-habitId", sHabitIds[i]);
       habitList.appendChild(habitListItem); 
   
-      // console.log(document.getElementsByClassName("habit-name")[i].innerHTML = sTitles[i]);
-      // console.log(document.getElementsByClassName("habit-icon")[i].src = ".." + sIcons[i]);
-      // console.log(document.getElementsByClassName("habit-desc")[i].innerHTML = sDescriptions[i]);
-      // console.log(document.getElementsByClassName("completed")[i].innerHTML = sNumCompleted[i]);
-      // console.log(document.getElementsByClassName("totalNum")[i].innerHTML = sDaily_frequencys[i]);
-  
-
   }
   if(index == 0){
     document.querySelector("#noHabits").style.display = 'block';
@@ -94,7 +85,6 @@ window.onload = function() {
   }
 
   var progressBarAnimate = function(doneButton){
-      console.log("entered function op-done");
   	
   }
 
@@ -131,7 +121,6 @@ function done(currentButton){
         if (newCount >= countstop) {
             //message if habit is completed
            currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSibling.nextElementSibling.innerHTML = "Completed Habit!";
-            //console.log("complete!");
             animator(oProgress, 100, 100);
             
             mixpanel.track("Completed a Habit");
@@ -148,7 +137,6 @@ function done(currentButton){
       });
 }
 var animator = function(oProgress, denom, num){
-    //console.log(denom, num);
     var iMsecsPerUpdate = 1000/60;  // # of milliseconds between updates, this gives 60fps
     var iDuration = 3;              // secs to animate for
     var iInterval = ((denom/num) * oProgress.getAttribute('max'))/(iDuration*1000/iMsecsPerUpdate); //Edit this to change the amount the bar animates for
@@ -165,12 +153,10 @@ var animator = function(oProgress, denom, num){
 function deleteHabit(element) {
     aChildren = element.parentNode.parentNode.childNodes;
     for(i=0; i<aChildren.length; i++){
-      console.log("aChildren", aChildren[i]);
       if(aChildren[i].className == "habit-id"){
         var sDeleteHabitId = aChildren[i].getAttribute("data-habitId");
       }
     }
-    console.log(sDeleteHabitId);
     swal({ title: "Delete Habit?", text: "Are you sure you want to delete this habit?", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!", closeOnConfirm: false }, 
          
          function(){ 

@@ -11,18 +11,15 @@ oFirebaseRef.onAuth(authDataCallback);
 //This function is called as soon as the authenticate information is received
 function authDataCallback(authData){
 	if(authData){
-		console.log("User " + authData.uid + " is logged in with " + authData.provider);
         mixpanel.identify(authData.uid);
 		window.location = "list.html";
 	} else{
-		console.log("User is logged out");
 	}
 }
 
 //function that handles the login callback from firebase
 function authHandler(error, authData){
 	if(error){
-		console.log("Login Failed!", error);
 		Rollbar.error("Login failed", {authData: authData, error: error});
 		document.querySelector('#firebaseError').innerHTML = error;
 	} else{
@@ -55,11 +52,9 @@ function firebaseCreateUser(userEmail, password){
 		password: password
 	}, function(error, userData){
 		if (error){
-			console.log("Error creating user:", error);
 			Rollbar.error("An error occured while creating a user", {userData: userData, error: error});
 			document.querySelector('#firebaseError').innerHTML = error;
 		} else{
-			console.log("Successfully created user account with uid:", userData.uid);
 			Rollbar.info("A new user has been created", {userData: userData})
 			//Notify that your username has been created
 			document.querySelector('#signInMessage').style.display;

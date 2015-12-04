@@ -11,13 +11,11 @@ var uId = 0;
 //This function is called as soon as the authenticate information is received
 function authDataCallback(authData){
     if(authData){
-        console.log("User " + authData.uid + " is logged in with " + authData.provider);
         uId = authData.uid;
         cHabitsRef = oFirebaseRef.child("users/" + uId + "/currentHabit");
         oHabitsRef = oFirebaseRef.child("users/" + uId + "/habits");
         populateFields();
     } else{
-        console.log("User is logged out");
         Rollbar.info("Unauthorized user attempted to access page", {page: "edit.html"});
         window.location = "login.html";
     }
@@ -108,8 +106,6 @@ document.querySelector('#save_p').onclick = function(){
 		var aWeeklyElements = document.getElementsByClassName("weekly-freq");
 		var aDailyElements = document.getElementsByClassName("daily-freq");
 
-		console.log(aWeeklyElements);
-		console.log(aDailyElements);
 		for(var i=0; i < aWeeklyElements.length; i++){
 			if(aWeeklyElements[i].checked){
 				sWeeklyFreq += aWeeklyElements[i].value + ",";
@@ -121,12 +117,6 @@ document.querySelector('#save_p').onclick = function(){
 				sDailyFreq = parseInt(aDailyElements[i].value);
 			}
 		}
-
-		console.log("title", sHabitTitle);
-		console.log("Icon", sHabitIcon);
-		console.log("Weekly", sWeeklyFreq);
-		console.log("Daily", sDailyFreq);
-		console.log("Others", sOthers);
 
 		//the path of current editing habit in firebase database
 		oHabitsRef = oHabitsRef.child(ch.key);

@@ -30,6 +30,8 @@ Packaging:
   - PhoneGap: we can not obtain the package for iOS because in order to build the iOS app, we need to have an iOS developer certificate. It is the same for Windows. We need to have Windows publisher ID to build a Windows app. 
   
   - Chrome App: We were able to launch and package our app using Chrome extensions. However, Chrome's Content Security Policy (CSP) prevented our inline JavaScript from being executed. We tried to relax the default script security property, and when that did not work we tried rewriting some of our code. Overall, the cost of reformatting and rewriting our code outweighed the benefits so we left our code as is. If we had more time, I think we could go about fixing this by going through our code and eliminating inline JavaScript, and making sure all of our JavaScript functions were in external JS files. For instance, we used the "onclick="(do something)"" attribute throughout our code, when we could get rid of them and use JS eventListeners instead. 
+
+  - Windows App: We were going to try to package our app to be a functional Universal Windows app.  We found a good tutorial to do so, but the necessary tools for Visual Studio were not installed by default.  We tried to figure out how to install the tools without completely reinstalling Visual Studio; which was difficult finding a standalone download page.  Once we found it though, applying it required a Visual Studio update which took too long to download and install.  Therefore we did not have enough time to complete the packaging for Windows
   
 
 Validations:
