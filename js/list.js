@@ -59,5 +59,9 @@ window.onload = function () {
     }
 }
 
+document.querySelector("#logOut").onclick = function(){
+  
+}
+
 
 };
