@@ -1,5 +1,5 @@
 //Mixpanel
-(function (e, b) {if (!b.__SV) {var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
 for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
 mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");
 
@@ -23,24 +23,25 @@ function authDataCallback(authData){
 }
 
 function selectImage(name) {
-    //Clear all the other effects
-    document.getElementById('icon1').style.border = "none";
-    document.getElementById('icon2').style.border = "none";
-    document.getElementById('icon3').style.border = "none";
-    document.getElementById('icon1').setAttribute("data-active", "false");
-    document.getElementById('icon2').setAttribute("data-active", "false");
-    document.getElementById('icon3').setAttribute("data-active", "false");
-    
-    var image = document.getElementById(name);
-    image.style.border = "5px solid #42A5F5";
-    image.setAttribute("data-active", "true");
+	//Clear all the other effects
+	document.getElementById('icon1').style.border = "none";
+	document.getElementById('icon2').style.border = "none";
+	document.getElementById('icon3').style.border = "none";
+
+	document.getElementById('icon1').setAttribute("data-active", "false");
+	document.getElementById('icon2').setAttribute("data-active", "false");
+	document.getElementById('icon3').setAttribute("data-active", "false");
+
+	var image = document.getElementById(name);
+	image.style.border = "5px solid #42A5F5";
+	image.setAttribute("data-active", "true");
 }
 
 //To allow users to toggle the radio buttons
 $("input:radio").on("click",function (e) {
 
     //if the radio button is selected, set checked to false and remove class
-    if($(this).is(".theone")) {
+    if($(this).is(".theone")) { 
         $(this).prop("checked",false).removeClass("theone");
         return;
     }
@@ -55,7 +56,7 @@ $("input:radio").on("click",function (e) {
 document.querySelector('#save_p').onclick = function(){
 
     //checks to ensure form is filled in correctly before submitting
-    //if no title, alert user
+	//if no title, alert user
     if(!$('#title').val()) {
         document.getElementById("noTitle").style.display=""
         return;
@@ -68,7 +69,7 @@ document.querySelector('#save_p').onclick = function(){
     }
               
     //if a daily frequency or others frequency isn't selected, alert user
-    if(!$('input:radio').is(':checked')){           
+    if(!$('input:radio').is(':checked')){                 
          if(!$('#others').val()){
             document.getElementById("noDFreq").style.display=""
             return;
@@ -100,33 +101,34 @@ document.querySelector('#save_p').onclick = function(){
        
     
     var images = document.getElementsByClassName("icon");
-    var image = "";
+	var image = "";
 
-    for(var i = 0; i< images.length; i++){
-        if(images[i].getAttribute("data-active") == "true"){
-            image = images[i].src.substring(images[i].src.indexOf("/img/"), images[i].src.length);
+	for(var i = 0; i< images.length; i++){
+		if(images[i].getAttribute("data-active") == "true"){
+			image = images[i].src.substring(images[i].src.indexOf("/img/"), images[i].src.length);
 		}
 	}
     
-    var sHabitTitle = document.querySelector('#title').value;
-    var sHabitIcon = image;
-    var sWeeklyFreq = "";
-    var sDailyFreq = 0;
+    
+	var sHabitTitle = document.querySelector('#title').value;
+	var sHabitIcon = image;
+	var sWeeklyFreq = "";
+	var sDailyFreq = 0;
     var sBestRecord = 0;
     var sDaysInARow = 0;
     var sNumCompletedToday = 0;
     var sTotalToday = 5;
     var sDescription = document.querySelector('#description').value;
-    var sOthers = document.querySelector('#others').value;
+	var sOthers = document.querySelector('#others').value;
 
-    var aWeeklyElements = document.getElementsByClassName("weekly-freq");
-    var aDailyElements = document.getElementsByClassName("daily-freq");
+	var aWeeklyElements = document.getElementsByClassName("weekly-freq");
+	var aDailyElements = document.getElementsByClassName("daily-freq");
 
-    console.log(aWeeklyElements);
-    console.log(aDailyElements);
-    for(var i=0; i < aWeeklyElements.length; i++){
-        if(aWeeklyElements[i].checked){
-            sWeeklyFreq += aWeeklyElements[i].value + ",";
+	console.log(aWeeklyElements);
+	console.log(aDailyElements);
+	for(var i=0; i < aWeeklyElements.length; i++){
+		if(aWeeklyElements[i].checked){
+			sWeeklyFreq += aWeeklyElements[i].value + ",";
 		}
 	}
 
