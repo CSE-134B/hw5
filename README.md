@@ -1,6 +1,5 @@
 # hw5: App Prep and Distribution
 
-=======
 Team Members: 
   - Kann Chea
   - Megan Ring
@@ -15,6 +14,7 @@ Team Members:
 3. PhoneGap - Phone app Proof of Concept
 4. Grunt - Minification
 5. Firebase - Database
+6. Sweet Alert - Custom alert library
 
 ##### Login Credentials
 
