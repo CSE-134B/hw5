@@ -37,3 +37,4 @@ Validations:
 
 Display Habits:
  - The more recent added habit is still shown underneath the old ones. We tried to fix how the list is displayed, but we ended up breaking the whole display.
+ - Another minor limitatation is that the progress bar for each individual habit goes back to its initial state when the user refreshes the page or navigates away from the page. However, the counter for the number of times a habit is completed is stored correctly, so if the user clicks the green complete button again the progress bar fills to the correct amount. 
