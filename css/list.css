@@ -79,3 +79,17 @@ body{
   to {opacity: 0; -webkit-transform: translate3d(-100%, 0, 0); transform: translate3d(-100%, 0, 0);}
 }
 .fadeOutLeft {-webkit-animation-name: fadeOutLeft; animation-name: fadeOutLeft;}
+
+/* logout button */
+
+#logOut {
+    position: absolute;
+    top: 8px;
+    right: 0px;
+    margin-right: 16px;
+    background: rgba(33, 72, 100, 1.0);
+    color: white;
+    border-radius: 10px;
+    padding: 7px 13px 7px 13px;
+    font-size: 12px;
+}
