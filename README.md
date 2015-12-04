@@ -23,4 +23,9 @@ User password: 1234
 
 Packaging:
   - PhoneGap: we can not obtain the package for iOS because in order to build the iOS app, we need to have an iOS developer certificate. It is the same for Windows. We need to have Windows publisher ID to build a Windows app. 
+  
   - Chrome App: We were able to launch and package our app using Chrome extensions. However, Chrome's Content Security Policy (CSP) prevented our inline JavaScript from being executed. We tried to relax the default script security property, and when that did not work we tried rewriting some of our code. Overall, the cost of reformatting and rewriting our code outweighed the benefits so we left our code as is. If we had more time, I think we could go about fixing this by going through our code and eliminating inline JavaScript, and making sure all of our JavaScript functions were in external JS files. For instance, we used the "onclick="(do something)"" attribute throughout our code, when we could get rid of them and use JS eventListeners instead. 
+
+Validations:
+ - When validating our JavaScript files, a lot of problems we found using JSLint were from the Mixpanel functions, or problems with our whitespace (like in-between ')' and '{' for functions, indentation, and unexpected trailing space).  
+
