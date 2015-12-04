@@ -37,6 +37,7 @@ function firebaseLogin(userEmail, password){
 		}, authHandler
 	);
     mixpanel.people.set({"$email": userEmail});
+    mixpanel.track("User logged in");
 }
 
 function firebasePersistUserAuth(authData){

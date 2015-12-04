@@ -95,6 +95,7 @@ mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");</script><!-- end Mixpanel -->
                     //console.log("complete!");
                     animator(oProgress, 100, 100);
                     
+                    mixpanel.time_event("Completed a Habit");
                     mixpanel.track("Completed a Habit");
                 }
                 else {
@@ -102,7 +103,7 @@ mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");</script><!-- end Mixpanel -->
                     
 currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.innerHTML=countstop;
                 animator(oProgress, newCount, countstop);
-                    
+                
                 mixpanel.track("Did a Habit");
                 }
                     });
