@@ -83,7 +83,8 @@ mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");</script><!-- end Mixpanel -->
                 var counter = data.numCompleted;
               
                 var newCount = counter + 1;
-                    //console.log(oFirebaseRef.child(childSnapshot.key()).update({numCompleted : newCount}));
+                
+                oFirebaseRef.child(childSnapshot.key()).update({numCompleted : newCount});
                     var oCheckedNotificationRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/notifications/' + childSnapshot.key());
                     var oUpdatedDate = Date.now();
                     oCheckedNotificationRef.update({'last_updated': oUpdatedDate});
@@ -126,7 +127,7 @@ currentButton.parentNode.previousElementSibling.firstElementChild.nextElementSib
         //delete habit alert and transition
         function deleteHabit(element) {
             
-            swal({ title: "Are you sure?", text: "Are you sure you want to delete this habit?", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!", closeOnConfirm: false }, 
+            swal({ title: "Delete Habit?", text: "Are you sure you want to delete this habit?", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!", closeOnConfirm: false }, 
                  
                  function(){ 
                 
@@ -159,7 +160,6 @@ var cHabitsRef = oFirebaseRef.child("currentHabit");
 eFirebaseRef.once("value", function(snapshot){
     data = snapshot.val();
 });
-
 function editHabit(habit){
     var habitTitle = habit.previousElementSibling.previousElementSibling.innerHTML;
         for(var keys in data){
@@ -176,7 +176,6 @@ function editHabit(habit){
     mixpanel.track("Habit Edited");
     location.href='edit.html';
 }
-
     </script>
 <script>
 var oFirebaseRef = new Firebase('http://boiling-torch-2236.firebaseIO.com/web/');
