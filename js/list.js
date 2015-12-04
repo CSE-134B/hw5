@@ -108,7 +108,7 @@ function done(currentButton){
     var oParentLi = currentButton.parentNode.parentNode;
     var aChildren = oParentLi.getElementsByTagName('progress');
     var oProgress = aChildren[0];
-    
+    var habitTitle = "";
     var habitTitle = currentButton.parentNode.previousElementSibling.previousElementSibling.firstElementChild.firstElementChild.innerHTML;
     oHabitsRef.orderByChild("title").equalTo(habitTitle).once("value", function(snapshot){
                                           
