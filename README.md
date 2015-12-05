@@ -33,7 +33,9 @@ Packaging:
 
   - Windows App: We were going to try to package our app to be a functional Universal Windows app.  We found a good tutorial to do so, but the necessary tools for Visual Studio were not installed by default.  We tried to figure out how to install the tools without completely reinstalling Visual Studio; which was difficult finding a standalone download page.  Once we found it though, applying it required a Visual Studio update which took too long to download and install.  Therefore we did not have enough time to complete the packaging for Windows
   
-
+Bundling:
+ - The bundling of javascript files and css files produces some errors. The main reason is that some files share the same function names but the functions' contents are different, so that they overlap and overwrite with each other. To avoid this conflict we didn't reference bundle.css and bundle.js in our project, but we do include the bundles files in the folder for grading purpose.
+ 
 Validations:
  - When validating our JavaScript files, a lot of problems we found using JSLint were from the Mixpanel functions, or problems with our whitespace (like in-between ')' and '{' for functions, indentation, and unexpected trailing space).  
 

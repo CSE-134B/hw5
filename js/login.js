@@ -1,1 +1,95 @@
-function authDataCallback(a){a&&(mixpanel.identify(a.uid),window.location="list.html")}function authHandler(a,b){a?(Rollbar.error("Login failed",{authData:b,error:a}),document.querySelector("#firebaseError").innerHTML=a):window.location="list.html"}function firebaseLogin(a,b){oFirebaseRef.authWithPassword({email:a,password:b},authHandler),mixpanel.people.set({$email:a}),mixpanel.track("User logged in")}function firebasePersistUserAuth(a){}function firebaseCreateUser(a,b){oFirebaseRef.createUser({email:a,password:b},function(a,b){a?(Rollbar.error("An error occured while creating a user",{userData:b,error:a}),document.querySelector("#firebaseError").innerHTML=a):(Rollbar.info("A new user has been created",{userData:b}),document.querySelector("#signInMessage").style.display,document.querySelector("#usermail").value="",document.querySelector("#password").value="")})}!function(a,b){if(!b.__SV){var c,d,e,f;window.mixpanel=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="mixpanel",h.people=h.people||[],h.toString=function(a){var b="mixpanel";return"mixpanel"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.2,c=a.createElement("script"),c.type="text/javascript",c.async=!0,c.src="undefined"!=typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===a.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.mixpanel||[]),mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");var oFirebaseRef=new Firebase("https://boiling-torch-2236.firebaseio.com/web/");oFirebaseRef.onAuth(authDataCallback),document.querySelector("#loginButton").onclick=function(){var a=document.querySelector("#usermail").value,b=document.querySelector("#password").value;firebaseLogin(a,b)},document.querySelector("#signUpButton").onclick=function(){var a=document.querySelector("#usermail").value,b=document.querySelector("#password").value;firebaseCreateUser(a,b)},document.querySelector("#password").onkeyup=function(a){if(13==a.keyCode){var b=document.querySelector("#usermail").value,c=document.querySelector("#password").value;firebaseLogin(b,c)}};
+//Mixpanel
+(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+mixpanel.init("0d2f16c090a094f434fd3a30d5df6bb6");
+
+var oFirebaseRef = new Firebase("https://boiling-torch-2236.firebaseio.com/web/");
+
+oFirebaseRef.onAuth(authDataCallback);
+
+
+//This function is called as soon as the authenticate information is received
+function authDataCallback(authData){
+	if(authData){
+        mixpanel.identify(authData.uid);
+		window.location = "list.html";
+	} else{
+	}
+}
+
+//function that handles the login callback from firebase
+function authHandler(error, authData){
+	if(error){
+		Rollbar.error("Login failed", {authData: authData, error: error});
+		document.querySelector('#firebaseError').innerHTML = error;
+	} else{
+		//firebasePersistUserAuth(authData);
+		window.location = "list.html";
+
+	}
+}
+
+function firebaseLogin(userEmail, password){
+	oFirebaseRef.authWithPassword({
+		email		: userEmail,
+		password	: password
+		}, authHandler
+	);
+    mixpanel.people.set({"$email": userEmail});
+    mixpanel.track("User logged in");
+}
+
+function firebasePersistUserAuth(authData){
+	// oFirebaseRef.child("users").child(authData.uid).set({
+	// 	provider: authData.provider,
+	// 	name: authData.password.email.replace(/@.*/, '')
+	// });
+}
+
+function firebaseCreateUser(userEmail, password){
+	oFirebaseRef.createUser({
+		email: userEmail,
+		password: password
+	}, function(error, userData){
+		if (error){
+			Rollbar.error("An error occured while creating a user", {userData: userData, error: error});
+			document.querySelector('#firebaseError').innerHTML = error;
+		} else{
+			Rollbar.info("A new user has been created", {userData: userData})
+			//Notify that your username has been created
+			document.querySelector('#signInMessage').style.display;
+
+			//clear text fields
+			document.querySelector('#usermail').value = "";
+			document.querySelector('#password').value = "";
+		}
+	});
+}
+
+document.querySelector('#loginButton').onclick=function(){
+	var userEmail = document.querySelector('#usermail').value;
+	var password = document.querySelector('#password').value; 
+	firebaseLogin(userEmail, password);
+	
+};
+
+document.querySelector('#signUpButton').onclick=function(){
+	var userEmail = document.querySelector('#usermail').value;
+	var password = document.querySelector('#password').value;
+	firebaseCreateUser(userEmail, password);	
+}
+
+document.querySelector('#password').onkeyup = function(e){
+	//enter key has been pressed
+	if(e.keyCode == 13){	
+		var userEmail = document.querySelector('#usermail').value;
+		var password = document.querySelector('#password').value; 
+		firebaseLogin(userEmail, password);	
+	}
+};
+
+// document.querySelector('#signUpButton').onclick=function(){
+// 	var signUpText = document.getElementById("signInMessage");
+//   	signUpText.style.display = "block";
+// };
+
